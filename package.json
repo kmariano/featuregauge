@@ -1,12 +1,14 @@
 {
-  "name": "application-name",
+  "name": "featuregauge",
+  "description": "This application allows users to democratically vote for features they want to see in projects",
   "version": "0.0.1",
   "private": true,
+  "author": "Koshin Mariano",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
     "express": "3.2.4",
-    "jade": "*"
+    "mongoose": ">=3.6.11"
   }
 }

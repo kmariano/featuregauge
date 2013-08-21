@@ -5,6 +5,14 @@ var Schema = mongoose.Schema;
  - This file contains all the mongoose schemas
  **/
 
+/*
+ */
+exports.FeatureSchema = new Schema({
+    name        : String,
+    description : String,
+    votecount   : {type: Number, default : 0 }
+});
+
 /**
  * Project
  * A project can contain one or more features (features that a user can vote for).
@@ -18,19 +26,6 @@ exports.ProjectSchema = new Schema({
 });
 
 
-/*
- */
-exports.FeatureSchema = new Schema({
-    name        : String,
-    description : String,
-    votecount   : {type: Number, default : 0 },
-    stories     : [exports.StorySchema]
-});
-
-exports.StorySchema = new Schema({
-    name        :   String,
-    description :   String
-});
 
 /**
  * Vote Schema
@@ -43,9 +38,9 @@ exports.StorySchema = new Schema({
  *
  */
 exports.VoteSchema  = new Schema({
-    userID: mongoose.Schema.Types.ObjectId,
-    projectID: mongoose.Schema.Types.ObjectId,
-    featureID: mongoose.Schema.Types.ObjectId,
+    userID: Schema.Types.ObjectId,
+    projectID: Schema.Types.ObjectId,
+    featureID: Schema.Types.ObjectId,
     votetype: String,
     votedate: Date
 });

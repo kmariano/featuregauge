@@ -4,7 +4,6 @@
  */
 
 var express     = require('express')
-  , routes      = require('./routes')
   , _           = require('underscore')
   , mongoose    = require('mongoose')
   , db          = mongoose.connect('mongodb://localhost/featuregauge')
@@ -15,9 +14,9 @@ var express     = require('express')
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 3005);
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
+  app.set('view engine', 'hbs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
@@ -33,23 +32,17 @@ app.configure('development', function(){
 });
 
 //setup routes
-app.get('/', routes.index);
-
 app.get('/projects', project.list);
-app.get('/project/create', project.add );
+app.post('/project/create', project.add );
+app.get('/project/:id', project.find );
+app.put('/project/:id/update', project.update );
+app.delete('/project/:id/delete', project.delete );
 
-app.post('/project/update', project.update );
-app.post('/project/delete', project.delete );
-
-app.get('/epics', project.getEpics );
-app.get('/epic/create', project.createEpic );
-app.post('/epic/update', project.updateEpic );
-app.post('/epic/delete', project.deleteEpic );
-
-
-//app.get('project/vote', project.hasvote );
-//app.post('project/vote', project.vote );
-
+app.get('/project/:id/features', project.getFeatures );
+app.post('/project/:id/feature/create', project.createFeature );
+app.put('/feature/:id/update', project.updateFeature );
+app.delete('/feature/:id/delete', project.deleteFeature );
+app.get('/feature/:id', project.findFeatureById );
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
